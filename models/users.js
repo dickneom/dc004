@@ -16,6 +16,9 @@ module.exports = function (sequelize, DataTypes) {
     apellido: {
       type: DataTypes.TEXT
     },
+    telefono: {
+      type: DataTypes.TEXT
+    },
     email: {
       type: DataTypes.TEXT
     },

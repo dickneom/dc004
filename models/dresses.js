@@ -14,8 +14,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.TEXT
     },
     colorId: {
-      type: DataTypes.TEXT,
+      type: DataTypes.INTEGER,
       field: 'color_id'
+    },
+    marca: {
+      type: DataTypes.TEXT
+    },
+    precio: {
+      type: DataTypes.NUMERIC
     }
   }, {
     tableName: 'vestidos'
