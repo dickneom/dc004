@@ -1,8 +1,12 @@
 var Sequelize = require('sequelize')
 
-var sequelize = new Sequelize(,,,{
-  dialect: 'sqlite'
-  storage: '../db/'
+var sequelize = new Sequelize('', '', '', {
+  dialect: 'sqlite',
+  storage: '../db/',
+  define: {
+    timestamps: false,
+    freezeTableName: true
+  }
 })
 
 // conentando los modelos, relaciones en la base de datos en un db objeto
