@@ -1,4 +1,23 @@
 extends ../layout
+include ../mixins
 
 block content
+  +menu-simple
+
   h1 Ingreso
+  div
+    form(action="/authenticate" method="post")
+      label(for='email') Email:
+      input(type='text' name='email')
+      br
+      label(for='clave') Clave:
+      input(type='text' name='clave')
+      br
+      label Recuerdame
+      input(type='checkbox' checked=true name='recordar')
+      br
+      input(type='submit' value='Entrar')
+      a(href='/register') Registrar
+      a(href='/pass-recover') Recuperar contraseña
+
+  +foot

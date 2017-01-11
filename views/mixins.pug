@@ -27,6 +27,30 @@ mixin menu
               li.divider(role='separator')
               li: a(href="#") Link
 
+mixin menu-simple
+  h3: a(href='/') DressCloset
+  ul
+    if (ventana !== 'index')
+      li: a(href='/') Inicio
+    if (ventana !== 'dresses')
+      li: a(href='/dresses_nr') Vestidos
+    if (ventana !== 'login')
+      li: a(href='/login') Ingresar
+    if (ventana !== 'register')
+      li: a(href='/register') Registrar
+
+mixin menu-user
+  h3: a(href='/') DressCloset
+  ul
+    if (ventana !== 'dresses')
+      li: a(href='/dresses') Vestidos
+    if (ventana !== 'favorites')
+      li: a(href='/') Favoritos
+    //- if (ventana !== 'login')
+    li: a(href='#') Perfil
+    //- if (ventana !== 'register')
+    li: a(href='#') Menu
+
 mixin filtro
   form(action='#' method='post')
     label(for='color') Color

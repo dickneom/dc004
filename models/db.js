@@ -2,7 +2,7 @@ var Sequelize = require('sequelize')
 
 var sequelize = new Sequelize('', '', '', {
   dialect: 'sqlite',
-  storage: '../db/',
+  storage: './db/dc.db',
   define: {
     timestamps: false,
     freezeTableName: true
@@ -16,8 +16,8 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 // Modelos - Tablas
-db.users = require('users')(sequelize, Sequelize)
-db.dresses = require('dresses')(sequelize, Sequelize)
+db.users = require('./users')(sequelize, Sequelize)
+db.dresses = require('./dresses')(sequelize, Sequelize)
 
 // Relaciones
 db.users.hasMany(db.dresses)

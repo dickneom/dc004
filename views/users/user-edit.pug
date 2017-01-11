@@ -1,0 +1,20 @@
+extends ../layout
+include ../mixins
+
+block content
+  h1 Editar Usuario
+  if (usuario)
+    form(action="/user-save" method="put")
+      input(type='text' name='id' value=usuario.id)
+  else
+    form(action="/user-save" method="post")
+      input(type='text' name='id' value='')
+      br
+
+    label(for='name') Nombre:
+      input(type='text' name='name' value=usuario.nombre placeholder='Ingrese el nombre')
+    br
+    label(for='apellido') Nombre:
+      input(type='text' name='apellido' value=usuario.apellido placeholder='Ingrese el apellido')
+    br
+    inptu(type='submit' value='Grabar')

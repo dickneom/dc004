@@ -2,11 +2,8 @@ extends layout
 include mixins
 
 block content
-  h1= title
-  ul
-    li: a(href="/login") Login
-    li: a(href="/register") Sign up
-
+  +menu-simple
+  
   h1 Vestidos
   p Aqui debería estar una cuadricula con los datos de los vestidos
     a(href='/dress') Vestido

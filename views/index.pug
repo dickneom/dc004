@@ -2,12 +2,9 @@ extends layout
 include mixins
 
 block content
-  h1= title
-  ul
-    li: a(href="/dresses") Vestidos
-    li: a(href="/login") Login
-    li: a(href="/register") Sign up
+  +menu-simple
 
+  h1= title
   p Welcome to #{title}
   p Aqui debería estar un carrusel para mostrar eventos y noticias
 

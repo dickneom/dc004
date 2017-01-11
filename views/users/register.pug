@@ -1,4 +1,29 @@
 extends ../layout
+include ../mixins
 
 block content
+  +menu-simple
+
   h1 Registro
+  form(action="#" method="post")
+    label(for='alias') Alias
+    input(type='text' name='alias')
+    br
+    label(for='nombre') Nombre
+    input(type='text' name='nombre')
+    br
+    label(for='apellido') Apellido
+    input(type='text' name='apellido')
+    br
+    label(for='email') Email
+    input(type='text' name='email')
+    br
+    label(for='telefono') Telefono
+    input(type='text' name='telefono')
+    br
+    label(for='clave') Clave
+    input(type='text' name='clave')
+    br
+    input(type='submit' value='Registar')
+
+  +foot
