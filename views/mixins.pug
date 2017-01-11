@@ -1,0 +1,38 @@
+mixin menu
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    .container            //-.collapse.navbar-collapse
+      .navbar-header
+        button.navbar-toggle(data-toggle='collapse' data-target='#dcMenu')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='#') Dress Closet
+      .collapse.navbar-collapse#dcMenu
+        ul.nav.navbar-nav
+          li.active: a(hfer="#") Home
+          li: a(href='#') Pagina 1
+        ul.nav.navbar-nav.navbar-right
+          p.navbar-text Alias
+          li: a(href="#")
+            span.glyphicon.glyphicon-user
+            span  Registrarse
+          li: a(href="#")
+            span.glyphicon.glyphicon-log-in
+            span  Ingresar
+          li.dropdown
+            a.dropdown-toggle(href="#" data-toggle='dropdown') Menu
+              span.caret
+            ul.dropdown-menu
+              li: a(href="#") Action
+              li.divider(role='separator')
+              li: a(href="#") Link
+
+mixin filtro
+  form(action='#' method='post')
+    label(for='color') Color
+    select(id='selColor')
+      option Blanco
+      option Negro
+      option Rojo
+      option Azul
+      option Verde
