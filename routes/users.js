@@ -8,6 +8,8 @@ var router = express.Router()
   res.send('respond with a resource');
 }); */
 
+
+
 router.route('/')
   // Crear usuarios
   .post(function (req, res) {
@@ -15,7 +17,8 @@ router.route('/')
   })
   // recupera todos los usuarios
   .get(function (req, res) {
-    res.send('Recupera todos los usuarios')
+    // res.send('Recupera todos los usuarios')
+    res.render('')
   })
 
 router.route('/:user_id')

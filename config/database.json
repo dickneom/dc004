@@ -1,0 +1,14 @@
+{
+  'dev': {
+    'driver': '',
+    'user': '',
+    'database': '',
+    'password': ''
+  }
+  'production': {
+    'driver': '',
+    'user': '',
+    'database': '',
+    'password': ''
+  }
+}
