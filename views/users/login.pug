@@ -5,8 +5,10 @@ block content
   +menu-simple
 
   h1 Ingreso
+  if (error)
+    h3= error
   div
-    form(action="/authenticate" method="post")
+    form(action="/login" method="post")
       label(for='email') Email:
       input(type='text' name='email')
       br

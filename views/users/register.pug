@@ -1,28 +1,51 @@
 extends ../layout
 include ../mixins
 
+mixin error(errors, field)
+  if (errors)
+    each error in errores
+      if (error.path == field)
+        li.error ERROR. #{error.message}
+
 block content
   +menu-simple
 
   h1 Registro
+
+  if (errores)
+    p= errores.length
+    ul
+      each error in errores
+        li.error Error en: #{error.path} tipo: #{error.message}
+
   form(action="#" method="post")
+    input(type='text' name='id' value='')
+    br
     label(for='alias') Alias
     input(type='text' name='alias')
+    +error(errores, 'alias')
     br
     label(for='nombre') Nombre
     input(type='text' name='nombre')
+    +error(errores, 'nombre')
     br
     label(for='apellido') Apellido
     input(type='text' name='apellido')
+    +error(errores, 'apellido')
     br
     label(for='email') Email
     input(type='text' name='email')
+    +error(errores, 'email')
     br
     label(for='telefono') Telefono
     input(type='text' name='telefono')
+    +error(errores, 'telefono')
     br
     label(for='clave') Clave
     input(type='text' name='clave')
+    br
+    label(for='clave1') Reingresar la clave
+    input(type='text' name='clave1')
     br
     input(type='submit' value='Registar')
 

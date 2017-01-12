@@ -39,15 +39,16 @@ mixin menu-simple
     if (ventana !== 'register')
       li: a(href='/register') Registrar
 
-mixin menu-user
+mixin menu-user(nombre)
   h3: a(href='/') DressCloset
+  p= nombre
   ul
     if (ventana !== 'dresses')
       li: a(href='/dresses') Vestidos
     if (ventana !== 'favorites')
       li: a(href='/') Favoritos
-    //- if (ventana !== 'login')
-    li: a(href='#') Perfil
+    if (ventana !== 'profile')
+      li: a(href='#') Perfil
     //- if (ventana !== 'register')
     li: a(href='#') Menu
 
