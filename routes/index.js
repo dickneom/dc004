@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
   res.render('index', { titulo: 'Dress Closet', ventana: 'index' })
 })
 
-// usuarios
+// LOGIN
 router.get('/login', function (req, res) {
   res.render('users/login', { titulo: 'Ingreso', ventana: 'login', error: null })
 })
@@ -66,6 +66,36 @@ function login (email, password, callback) {
   })
 }
 
+// RECUPERAR PASSWORD
+router.get('/pass_recover', function (req, res) {
+  res.render('users/pass_recover')
+})
+
+router.post('/pass_recover', function (req, res) {
+  var email = req.body.email
+  if (email && email !== '') {
+    res.send('El enlace de recuperacion de la clave fue enviado a ' + email)
+  } else {
+    res.render('users/pass_recover', {error: 'Ingrese un email valido.'})
+  }
+})
+
+// CAMBIO DE CLAVE
+router.get('/pass_change', function (req, res) {
+  res.render('users/pass_change')
+})
+
+router.post('/pass_change', function (req, res) {
+  var clave = req.body.clave
+  var clave1 = req.body.clave1
+  if (clave === clave1) {
+    res.send('Cambio de clave realizado con exito')
+  } else {
+    res.render('users/pass_recover', {error: 'Las claves no coinciden.'})
+  }
+})
+
+// REGISTRAR USUARIOS
 router.get('/register', function (req, res) {
   res.render('users/register', { titulo: 'Registro', ventana: 'register', user: null, errores: null })
 })
