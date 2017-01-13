@@ -3,6 +3,7 @@ var router = express.Router()
 
 // app.set('views', '../views')
 var db = require('../models/db')
+var control = require('../models/control')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -22,7 +23,7 @@ router.post('/login', function (req, res, next) {
 
   // var valor = login(email, password)
 
-  login(email, password, function (valor) {
+  control.login(email, password, function (valor) {
     if (valor.error) {
       console.log(valor.error)
       res.render('users/login', { titulo: 'Ingreso', ventana: 'login', error: valor.error })
@@ -33,39 +34,6 @@ router.post('/login', function (req, res, next) {
   })
 })
 
-function login (email, password, callback) {
-  db.users.find({where: {
-    email: email,
-    clave: password
-  }})
-  .then(function (user) {
-    if (user) {
-      if (user.autenticado) {
-        console.log('Usuario encontrado: ' + user.nombre)
-        callback({
-          error: null,
-          user: user
-        })
-      } else {
-        console.log('Usuario no autenticado')
-        callback({
-          error: 'Usuario no autenticado',
-          user: null
-        })
-      }
-    } else {
-      console.log('Usuario no encontrado')
-      callback({
-        error: 'Usuario no encontrado',
-        user: null
-      })
-    }
-  })
-  .catch(function (errores) {
-    console.log('Error al realizar la busqueda')
-  })
-}
-
 // RECUPERAR PASSWORD
 router.get('/pass_recover', function (req, res) {
   res.render('users/pass_recover')
@@ -74,7 +42,16 @@ router.get('/pass_recover', function (req, res) {
 router.post('/pass_recover', function (req, res) {
   var email = req.body.email
   if (email && email !== '') {
-    res.send('El enlace de recuperacion de la clave fue enviado a ' + email)
+    db.users.find({where: {
+      email: email
+    }})
+    .then(function (user) {
+      //
+      //  ENVIAR EMAIL
+      //
+      // res.send('El enlace de recuperacion de la clave fue enviado a ' + email)
+      res.render('users/pass_recover_email_verif', {email: email})
+    })
   } else {
     res.render('users/pass_recover', {error: 'Ingrese un email valido.'})
   }
@@ -82,16 +59,30 @@ router.post('/pass_recover', function (req, res) {
 
 // CAMBIO DE CLAVE
 router.get('/pass_change', function (req, res) {
-  res.render('users/pass_change')
+  var email = req.query.email
+  res.render('users/pass_change', {email: email})
 })
 
 router.post('/pass_change', function (req, res) {
   var clave = req.body.clave
   var clave1 = req.body.clave1
+  var userLogeado = req.usuarioLogeado
   if (clave === clave1) {
-    res.send('Cambio de clave realizado con exito')
+    if (userLogeado) {
+      var user = userLogeado
+      user.clave = clave
+      user.save(['clave'])
+      .then(function (userActualizado) {
+        res.send('Cambio de clave realizado con exito')
+      })
+      .catch(function (errores) {
+        res.send('No se puedo cambiar la clave')
+      })
+    } else {
+
+    }
   } else {
-    res.render('users/pass_recover', {error: 'Las claves no coinciden.'})
+    res.render('users/pass_change', {error: 'Las claves no coinciden.'})
   }
 })
 
@@ -132,7 +123,10 @@ router.post('/register', function (req, res) {
     db.users.create(user)
     .then(function (userNew) {
       console.log('Registro creado correctamente!')
-      res.render('users/email_verif', {titulo: 'Email de confirmación', user: userNew})
+      //
+      // ENVIAR EMAIL
+      //
+      res.render('users/register_email_verif', {titulo: 'Email de confirmación', user: userNew})
     })
     .catch(function (errores) {
       console.log('ERROR. No se registraron los datos!')

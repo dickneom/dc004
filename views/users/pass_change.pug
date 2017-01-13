@@ -10,10 +10,16 @@ block content
     p.error error
 
   form(action="/pass_change" method="post")
-    label(for='clave') Clave
+    if (email)
+      input(type='text' name='email' value=email)
+    else
+      label(for='claveAnterior') Clave Anterior:
+      input(type='text' name='claveAnterior')
+    br
+    label(for='clave') Clave:
     input(type='text' name='clave')
     br
-    label(for='clave1') Clave
+    label(for='clave1') Repetir la clave:
     input(type='text' name='clave1')
     br
     input(type='submit' value="Enviar")
