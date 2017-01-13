@@ -33,4 +33,15 @@ function login (email, password, callback) {
   })
 }
 
+function validarSesion (req, res, next) {
+  console.log('Validando session del usuario')
+  if (typeof req.session.usuarioLogeado === 'undefined') {
+    res.redirect('/login')
+  } else {
+    // Ya esta logeado
+    next()
+  }
+}
+
 module.exports.login = login
+module.exports.validarSesion = validarSesion
