@@ -7,8 +7,8 @@ var bodyParser = require('body-parser')
 var expressSession = require('express-session')
 
 var index = require('./routes/index')
-var users = require('./routes/users')
-var dresses = require('./routes/dresses')
+// var users = require('./routes/users')
+// var dresses = require('./routes/dresses')
 
 // Para control de sesiones
 var session = expressSession({
@@ -38,9 +38,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'static')))
 app.use(express.static(path.join(__dirname, 'bower_components')))
 
-app.use('/', index)
-app.use('/users', users)
-app.use('/dresses', dresses)
+app.use(index)
+// app.use('/users', users)
+// app.use('/dresses', dresses)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

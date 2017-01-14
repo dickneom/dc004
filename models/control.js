@@ -1,6 +1,7 @@
 var db = require('./db')
 
 function login (email, password, callback) {
+  var error
   db.users.find({where: {
     email: email,
     clave: password
@@ -9,23 +10,16 @@ function login (email, password, callback) {
     if (user) {
       if (user.autenticado) {
         console.log('Usuario encontrado: ' + user.nombre)
-        callback({
-          error: null,
-          user: user
-        })
+        callback(null, user)
       } else {
         console.log('Usuario no autenticado')
-        callback({
-          error: 'Usuario no autenticado',
-          user: null
-        })
+        error = 'Usuario no autenticado'
+        callback(error)
       }
     } else {
       console.log('Usuario no encontrado')
-      callback({
-        error: 'Usuario no encontrado',
-        user: null
-      })
+      error = 'Usuario no encontrado'
+      callback(error)
     }
   })
   .catch(function (errores) {

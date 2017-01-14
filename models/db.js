@@ -20,6 +20,6 @@ db.users = require('./users')(sequelize, Sequelize)
 db.dresses = require('./dresses')(sequelize, Sequelize)
 
 // Relaciones
-db.users.hasMany(db.dresses, {as: 'usuario_id'})
+db.users.hasMany(db.dresses, {foreignKey: 'usuario_id', as: 'usuario_id'})
 
 module.exports = db
