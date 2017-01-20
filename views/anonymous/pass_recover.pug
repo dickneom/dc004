@@ -2,16 +2,15 @@ extends ../layout
 include ../mixins
 
 block content
-  +menu-guet
+  +menu_guest
 
   h1 Recuperar contraseña
 
-  if (error)
-    p.error= error
+  if (errors)
+    p.error= errors
 
   form(action="/pass_recover" method="post")
-    label(for='email') Email:
-    input(type='text' name='email')
+    +input_required('Email', 'email', 'email', null, null)
     br
     input(type='submit' value='Enviar')
 

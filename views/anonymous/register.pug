@@ -1,0 +1,63 @@
+extends ../layout
+include ../mixins
+
+block content
+  +menu_guest
+
+  h1 Registro
+
+  if (errors)
+    p= errors.length
+    ul
+      each error in errors
+        li.error Error en: #{error.path} tipo: #{error.message}
+
+  if user
+    h3 Form Actualizar
+    form(action="/register" method="post")
+      input(type='text' name='id' value=user.id)
+      br
+      +input_required('Alias', 'text', 'nickname', user.nickname, errors)
+      br
+      +input_required('Nombre', 'text', 'firstname', user.firstname, errors)
+      br
+      +input_required('Apellido', 'text', 'lastname', user.lastname, errors)
+      br
+      +input_required('Email', 'email', 'email', user.email, errors)
+      br
+      +input_required('Fecha de nacimiento', 'date', 'birthdate', user.birthdate, errors)
+      br
+      +input_required('Contraseña', 'password', 'password', null, errors)
+      br
+      +input_required('Confirmar contraseña', 'password', 'password1', null, errors)
+      br
+      input(type='submit' value='Registar')
+      input(type='reset' value='Limpiar')
+  else
+    h3 Form Crear
+    form(action="/register" method="post")
+      input(type='text' name='id' value='')
+      br
+      +input_required('Alias', 'text', 'nickname', null, errors)
+      br
+      +input_required('Nombre', 'text', 'firstname', null, errors)
+      br
+      +input_required('Apellido', 'text', 'lastname', null, errors)
+      br
+      +input_required('Email', 'email', 'email', null, errors)
+      br
+      +input_required('Fecha de nacimiento', 'date', 'birthdate', null, errors)
+      br
+      +input_required('Contraseña', 'password', 'password', null, errors)
+      br
+      +input_required('Confirmar contraseña', 'password', 'password1', null, errors)
+      br
+      input(type='submit' value='Registar')
+      input(type='reset' value='Limpiar')
+
+  +foot
+
+
+
+
+//- Pagina para el registro de usuarios

@@ -16,10 +16,10 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 // Modelos - Tablas
-db.users = require('./users')(sequelize, Sequelize)
-db.dresses = require('./dresses')(sequelize, Sequelize)
+db.User = require('./users')(sequelize, Sequelize)
+db.Dress = require('./dresses')(sequelize, Sequelize)
 
 // Relaciones
-db.users.hasMany(db.dresses, {foreignKey: 'usuario_id', as: 'usuario_id'})
+db.User.hasMany(db.Dress, {foreignKey: 'user_id', as: 'user_id'})
 
 module.exports = db

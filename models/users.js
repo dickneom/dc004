@@ -7,59 +7,133 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    alias: {
+    nickname: {
       type: DataTypes.TEXT,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
       validate: {
         notEmpty: {args: true, msg: 'El alias no puede estar vacio'}
       }
     },
-    nombre: {
+    firstname: {
       type: DataTypes.TEXT,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
       validate: {
         notEmpty: {args: true, msg: 'El nombre no puede estar vacio'}
       }
     },
-    apellido: {
+    lastname: {
       type: DataTypes.TEXT,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
       validate: {
         notEmpty: {args: true, msg: 'El apellido no puede estar vacio'}
       }
     },
-    telefono: {
+    email: {
+      type: DataTypes.TEXT,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
+      unique: {args: true, msg: 'El email ya esta registrado'},
+      validate: {
+        notEmpty: {args: true, msg: 'El email no puede estar vacio.'},
+        isEmail: {args: true, msg: 'No es un email'}
+      }
+    },
+    birthday: {
+      type: DataTypes.DATE,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
+      validate: {
+        notEmpty: {args: true, msg: 'La fecha de nacimiento no puede estar vacia'},
+        isDate: true,
+        isEmpty: function (value) {
+          console.log('birthdate: -' + value + '-')
+          if (value.length === 0) {
+            throw new Error('La fecha de nacimiento no puede estar vacia')
+          }
+        }
+      }
+    },
+    password: {
+      type: DataTypes.TEXT,
+      allowNull: {args: false, msg: 'No puede ser nulo'},
+      notEmpty: true,
+      notNull: true,
+      validate: {
+        len: {args: [6, 20], msg: 'La clave debe tener de 6 a 20 caracteres'}
+      }
+    },
+    authenticated: {
+      type: DataTypes.BOOLEAN,
+      default: false
+    },
+    genderId: {
+      type: DataTypes.INTEGER,
+      field: 'gender_id'
+    },
+    phone: {
       type: DataTypes.TEXT,
       validate: {
         isNumeric: {args: true, msg: 'El telefono solo puede contener numeros'}
       }
     },
-    email: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: {args: true, msg: 'El email no puede estar vacio.'},
-        isEmail: {args: true, msg: 'Debe ingresar un email valido.'}
-      }
+    picture: {
+      type: DataTypes.TEXT
     },
-    clave: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      notEmpty: true,
-      notNull: true,
-      validate: {
-        notEmpty: {args: true, msg: 'La clave no puede estar vacio'}
-      }
+    size: {   // Talla
+      type: DataTypes.TEXT
     },
-    autenticado: {
+    useNickname: {
       type: DataTypes.BOOLEAN,
-      default: false
+      field: 'use_nickname'
+    },
+    dirCountry: {
+      type: DataTypes.TEXT,
+      field: 'dir_country'
+    },
+    dirState: {
+      type: DataTypes.TEXT,
+      field: 'dir_state'
+    },
+    dirCity: {
+      type: DataTypes.TEXT,
+      field: 'dir_city'
+    },
+    dirStreet: {
+      type: DataTypes.TEXT,
+      field: 'dir_street'
+    },
+    dirNumber: {
+      type: DataTypes.TEXT,
+      field: 'dir_number'
+    },
+    dirStreetSec: {
+      type: DataTypes.TEXT,
+      field: 'dir_street_sec'
+    },
+    dirReference: {
+      type: DataTypes.TEXT,
+      field: 'dir_reference'
+    },
+    dirPOBox: {
+      type: DataTypes.TEXT,
+      field: 'dir_pobox'
+    },
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
+    },
+    deletedAt: {
+      type: DataTypes.DATE
     }
   }, {
-    tableName: 'usuarios',
+    tableName: 'users',
+    timestamp: true,
+    paranoid: true,
     getterMethods: {
-      fullName: function () {
-        var nombre = this.getDataValue('nombre')
-        var apellido = this.getDataValue('apellido')
-        var fullName = nombre + ' ' + apellido
+      fullname: function () {
+        var firstname = this.getDataValue('firstname')
+        var lastname = this.getDataValue('lastname')
+        var fullName = firstname + ' ' + lastname
         return fullName
       }
     }

@@ -1,3 +1,15 @@
+//- archivo con mixins
+//-  menu-guest menu para las paginas de los visitantes no registrados
+//-  menu-user  menu para las paginas de los visitantes registrados
+//-  filtro     seccion para filtrar los vestidos
+//-  foot       seccion que va al pie de las paginas
+//-  input      un campo input para un formulario, contiene el label,
+//-             el input y muestra errores si hay
+//-  input_required un campo input para un formulario, contiene el label,
+//-                 el input y muestra errores si los hay, pero el input es
+//-                 es requerido, no deja pasar si no se llena el campo
+//-  input_error          muestra los errores asociados a los inputs
+
 mixin menu
   nav.navbar.navbar-inverse.navbar-fixed-top
     .container            //-.collapse.navbar-collapse
@@ -27,29 +39,30 @@ mixin menu
               li.divider(role='separator')
               li: a(href="#") Link
 
-mixin menu-guest
+mixin menu_guest
   h3: a(href='/') DressCloset
   ul
-    if (ventana !== 'index')
+    if (pageName !== 'index')
       li: a(href='/') Inicio
-    if (ventana !== 'dresses')
+    if (pageName !== 'dresses')
       li: a(href='/dresses_nr') Vestidos
-    if (ventana !== 'login')
+    if (pageName !== 'login')
       li: a(href='/login') Ingresar
-    if (ventana !== 'register')
+    if (pageName !== 'register')
       li: a(href='/register') Registrar
 
-mixin menu-user(nombre)
-  h3: a(href='/') DressCloset
+mixin menu_user(nombre)
+  h3: a(href='/home') DressCloset
   p= nombre
   ul
-    if (ventana !== 'dresses')
-      li: a(href='/dresses_grid') Vestidos
-    if (ventana !== 'favorites')
-      li: a(href='/') Favoritos
-    if (ventana !== 'profile')
-      li: a(href='#') Perfil
-    //- if (ventana !== 'register')
+    if (pageName !== 'dresses')
+      li: a(href='/home') Vestidos
+    if (pageName !== 'favorites')
+      li: a(href='/favorites') Favoritos
+    if (pageName !== 'profile')
+      li: a(href='/profile') Perfil
+    li: a(href='/logout') Salir
+    //- if (pageName !== 'register')
     li: a(href='#') Menu
 
 mixin filtro
@@ -63,9 +76,30 @@ mixin filtro
       option Verde
 
 mixin foot
-  .container
-    p
-      ul
-        li Contacto
-        li Terminos y condiciones
-        li Privacidad
+  p
+    ul
+      li: a(href='#') Contacto
+      li: a(href='#') Terminos y condiciones
+      li: a(href='#') Privacidad
+
+mixin input(title, type, field, value, errors)
+  label(for=field)= title
+  if value
+    input(type=type name=field value=value placeholder='Actualizar')
+  else
+    input(type=type name=field placeholder='Crear')
+  +input_error(errors, field)
+
+mixin input_required(title, type, field, value, errors)
+  label(for=field)= title
+  if value
+    input(type=type name=field value=value placeholder='Actualizar' required)
+  else
+    input(type=type name=field placeholder='Crear' required)
+  +input_error(errors, field)
+
+mixin input_error(errors, field)
+  if (errors)
+    each error in errors
+      if (error.path == field)
+        li.error ERROR. #{error.message}

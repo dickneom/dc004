@@ -1,0 +1,12 @@
+extends ../layout
+include ../mixins
+
+block content
+  +menu_user(user.nickname)
+
+  h1 Dress Closet
+  p Bienvenido #{user.nickname}
+
+  +foot
+
+//- Pagina de inicio de un usuario que ha iniciado sesion

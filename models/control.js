@@ -1,35 +1,50 @@
 var db = require('./db')
 
-function login (email, password, callback) {
+function login (email, pass, rememberme, callback) {
+  // FALTA LA PARTE DE RECUERDAME
   var error
-  db.users.find({where: {
+  var password = encript(pass)
+  db.User.findOne({where: {
     email: email,
-    clave: password
+    password: password
   }})
   .then(function (user) {
     if (user) {
-      if (user.autenticado) {
-        console.log('Usuario encontrado: ' + user.nombre)
+      if (user.authenticated) {
+        console.log('Usuario encontrado: ' + user.fullname)
         callback(null, user)
       } else {
-        console.log('Usuario no autenticado')
         error = 'Usuario no autenticado'
+        console.log(error)
         callback(error)
       }
     } else {
-      console.log('Usuario no encontrado')
-      error = 'Usuario no encontrado'
+      error = 'Usuario y/o contraseña no validos'
+      console.log(error)
       callback(error)
     }
   })
   .catch(function (errores) {
-    console.log('Error al realizar la busqueda')
+    error = 'Error al realizar la busqueda'
+    console.log(error)
+    callback(error)
   })
 }
 
-function validarSesion (req, res, next) {
+function encript (value) {
+  var encript = value + 'a1'
+  // falta el algoritmo de algoritmo de encriptamiento
+  return encript
+}
+
+function sessionInit (req, res, user) {
+  req.session.userLoged = user
+}
+
+// middleware para validar si hay una session abierta
+function sessionValidate (req, res, next) {
   console.log('Validando session del usuario')
-  if (typeof req.session.usuarioLogeado === 'undefined') {
+  if (typeof req.session.userLoged === 'undefined') {
     res.redirect('/login')
   } else {
     // Ya esta logeado
@@ -38,4 +53,6 @@ function validarSesion (req, res, next) {
 }
 
 module.exports.login = login
-module.exports.validarSesion = validarSesion
+module.exports.encript = encript
+module.exports.sessionInit = sessionInit
+module.exports.sessionValidate = sessionValidate

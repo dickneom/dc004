@@ -3,36 +3,17 @@
 var express = require('express')
 var router = express.Router()
 
-var db = require('../models/db')
+// var db = require('../models/db')
 
-/* GET dresss listing. */
-/* router.get('/dresss', function(req, res, next) {
-  res.send('respond with a resource');
-}); */
-// ruta para ver los vestidos, usuarios autenticados
-router.get('/dresses_grid', function (req, res) {
-  var limit
-  var page
-
-  if (req.query.limit) {
-    limit = req.query.limit
-  } else {
-    limit = 3
-  }
-  if (req.query.page) {
-    page = req.query.page - 1
-  } else {
-    page = 0
-  }
-  var offset = limit * page
-  db.dresses.findAll({
-    limit: limit,
-    offset: offset
-  })
-  .then(function (dresses) {
-    res.render('./dresses/dress_grid', { titulo: 'Vestidos', ventana: 'dresses', dresses: dresses })
-  })
-})
+/*
+/dress          GET   index - index
+/dress/create   GET   crear - create
+/dress          POST  grabar - store
+/dress/:id      GET   mostrar - show
+/dress/:id/edit GET   editar - edit
+/dress/:id      PUT/PATCH actualizar - update
+/dress/:id      DELETE    borrar - destroy
+*/
 
 router.route('/dresses')
   // recupera todos los vestidos
@@ -60,5 +41,13 @@ router.route('/dresses/:dress_id')
     var dressId = req.params.dressId
     res.send('Eliminar el vestido: ' + dressId)
   })
+
+router.get('/dresses/create', function (req, res) {
+
+})
+
+router.get('/dresses/:dress_id/edit', function (req, res) {
+
+})
 
 module.exports = router

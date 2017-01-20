@@ -2,11 +2,18 @@ extends layout
 include mixins
 
 block content
-  +menu-user(user.fullName)
+  +menu_user(user.fullName)
 
   h1 Vestidos
   p Aqui debería estar una cuadricula con los datos de los vestidos
-    a(href='/dress') Vestido
+
+  h2 Vestido 1
+  p Descripcion Vestido 1
+    a(href='/dress') Vestido 1
+
+  h2 Vestido 2
+  p Descripcion Vestido 2
+    a(href='/dress') Vestido 2
 
   ul
     li Anterior
